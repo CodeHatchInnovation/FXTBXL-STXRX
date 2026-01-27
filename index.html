@@ -3,127 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>FXTBXL STORE | Serie Élite</title>
+    <title>FXTBXL STXRX | Serie Élite</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        #splash-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #7c3aed;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease-out;
+        }
+        .splash-icon {
+            font-size: 6rem;
+            color: white;
+            animation: pulse 1.5s infinite ease-in-out alternate;
+        }
+        @keyframes pulse {
+            from { transform: scale(0.9); opacity: 0.7; }
+            to { transform: scale(1.1); opacity: 1; }
+        }
+        .hidden-content { display: none; }
+    </style>
 </head>
 <body class="bg-[#f8f9fa] text-[#111827] antialiased">
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+    <div id="splash-screen">
+        <i class="ph-fill ph-lightning splash-icon"></i>
+    </div>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyBgoDcmxdIYRqo5gup302xLWaKO3AHsC5Y",
-            authDomain: "e-commerce-2ff74.firebaseapp.com",
-            databaseURL: "https://e-commerce-2ff74-default-rtdb.firebaseio.com",
-            projectId: "e-commerce-2ff74",
-            storageBucket: "e-commerce-2ff74.firebasestorage.app",
-            messagingSenderId: "1079041764789",
-            appId: "1:1079041764789:web:63cc75dfd3e5a4e9d4bdfc",
-            measurementId: "G-0BLDR9NWTK"
-        };
+    <div id="main-content" class="hidden-content">
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+            import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        const app = initializeApp(firebaseConfig);
-        window.fbDB = getDatabase(app); window.fbRef = ref; window.fbPush = push; window.fbOnValue = onValue;
-    </script>
+            const firebaseConfig = {
+                apiKey: "AIzaSyBgoDcmxdIYRqo5gup302xLWaKO3AHsC5Y",
+                authDomain: "e-commerce-2ff74.firebaseapp.com",
+                databaseURL: "https://e-commerce-2ff74-default-rtdb.firebaseio.com",
+                projectId: "e-commerce-2ff74",
+                storageBucket: "e-commerce-2ff74.firebasestorage.app",
+                messagingSenderId: "1079041764789",
+                appId: "1:1079041764789:web:63cc75dfd3e5a4e9d4bdfc",
+                measurementId: "G-0BLDR9NWTK"
+            };
 
-    <nav class="fixed top-0 w-full z-[100] bg-white/90 backdrop-blur-xl border-b border-gray-200">
-        <div class="container mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-2 cursor-pointer group" onclick="location.reload()">
-                <i class="ph-fill ph-lightning text-[#7c3aed] text-2xl md:text-3xl"></i>
-                <span class="font-nike text-xl md:text-2xl tracking-tighter uppercase">FXTBXL<span class="text-[#7c3aed]">STORE</span></span>
-            </div>
-            <button id="abrir-carrito" class="relative p-2 hover:bg-gray-100 rounded-full transition-all">
-                <i class="ph-bold ph-shopping-bag text-2xl"></i>
-                <span id="badge-carrito" class="absolute -top-1 -right-1 bg-[#7c3aed] text-white text-[9px] font-black w-5 h-5 flex items-center justify-center rounded-full hidden border-2 border-white">0</span>
-            </button>
-        </div>
-    </nav>
+            const app = initializeApp(firebaseConfig);
+            window.fbDB = getDatabase(app); window.fbRef = ref; window.fbPush = push; window.fbOnValue = onValue;
+        </script>
 
-    <header class="pt-32 pb-12 md:pt-48 md:pb-24 bg-white overflow-hidden">
-        <div class="container mx-auto px-6 text-center reveal">
-            <h1 class="font-nike text-4xl sm:text-6xl md:text-8xl lg:text-9xl leading-none mb-4 tracking-tighter">DOMINA EL CAMPO</h1>
-            <p class="text-gray-400 font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase text-[9px] md:text-[10px]">Ingeniería para ganar / 2026 collection</p>
-        </div>
-    </header>
-
-    <main class="container mx-auto px-4 md:px-6 py-8">
-        <div id="contenedor-productos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8"></div>
-    </main>
-
-    <div id="modal-producto" class="fixed inset-0 z-[150] hidden flex items-end md:items-center justify-center p-0 md:p-4">
-        <div id="cerrar-fondo-modal" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
-        
-        <div class="relative bg-white w-full max-w-5xl h-[90vh] md:h-auto md:max-h-[90vh] shadow-2xl overflow-hidden flex flex-col md:flex-row reveal rounded-t-3xl md:rounded-none">
-            
-            <button id="btn-cerrar-modal" class="absolute top-6 right-6 text-gray-400 hover:text-[#7c3aed] z-[160] transition-colors bg-white/80 p-2 rounded-full md:bg-transparent md:p-0">
-                <i class="ph-bold ph-x text-2xl md:text-3xl"></i>
-            </button>
-
-            <div class="w-full md:w-3/5 bg-gray-50 flex items-center justify-center p-8 md:p-12 h-1/2 md:h-auto">
-                <img id="img-modal" src="" class="max-w-full max-h-full object-contain drop-shadow-2xl floating">
-            </div>
-
-            <div class="w-full md:w-2/5 overflow-y-auto custom-scroll p-6 md:p-10 bg-white h-1/2 md:h-auto">
-                <span class="text-[#7c3aed] text-[9px] font-black uppercase tracking-widest mb-2 block">Serie Élite</span>
-                <h2 id="titulo-modal" class="font-nike text-2xl md:text-4xl mb-2 text-gray-900 leading-tight"></h2>
-                <div id="precio-modal" class="text-lg font-medium text-gray-400 mb-6 md:mb-8"></div>
-                
-                <p id="desc-modal" class="text-gray-600 text-sm leading-relaxed mb-8 md:mb-10"></p>
-
-                <div class="mb-8 md:mb-10">
-                    <p class="text-[9px] font-bold uppercase mb-4 text-gray-400">Talla (MX)</p>
-                    <div id="tallas-modal" class="grid grid-cols-4 gap-2"></div>
+        <nav class="fixed top-0 w-full z-[100] bg-white/90 backdrop-blur-xl border-b border-gray-200">
+            <div class="container mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center gap-2 cursor-pointer group" onclick="location.reload()">
+                    <i class="ph-fill ph-lightning text-[#7c3aed] text-2xl md:text-3xl"></i>
+                    <span class="font-nike text-xl md:text-2xl tracking-tighter uppercase">FXTBXL<span class="text-[#7c3aed]">STXRX</span></span>
                 </div>
-
-                <button id="btn-agregar-carrito" class="w-full bg-[#111827] text-white py-5 md:py-6 font-bold uppercase tracking-widest text-[10px] md:text-[11px] hover:bg-[#7c3aed] transition-all mb-8 md:mb-12">
-                    Añadir a la bolsa
+                <button id="abrir-carrito" class="relative p-2 hover:bg-gray-100 rounded-full transition-all">
+                    <i class="ph-bold ph-shopping-bag text-2xl"></i>
+                    <span id="badge-carrito" class="absolute -top-1 -right-1 bg-[#7c3aed] text-white text-[9px] font-black w-5 h-5 flex items-center justify-center rounded-full hidden border-2 border-white">0</span>
                 </button>
+            </div>
+        </nav>
 
-                <div class="border-t border-gray-100 pt-8">
-                    <h4 class="font-nike text-sm mb-6 uppercase tracking-widest">Opiniones</h4>
-                    <div id="lista-reseñas" class="space-y-6 mb-8"></div>
+        <header class="pt-32 pb-12 md:pt-48 md:pb-24 bg-white overflow-hidden">
+            <div class="container mx-auto px-6 text-center reveal">
+                <h1 class="font-nike text-4xl sm:text-6xl md:text-8xl lg:text-9xl leading-none mb-4 tracking-tighter">DOMINA EL CAMPO</h1>
+                <p class="text-gray-400 font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase text-[9px] md:text-[10px]">Ingeniería para ganar / 2026 collection</p>
+            </div>
+        </header>
 
-                    <div class="bg-gray-50 p-4 md:p-6 border border-gray-200 rounded-xl">
-                        <input type="text" id="nombre-usuario" placeholder="Nombre" class="w-full bg-white border border-gray-200 p-3 text-xs mb-3 outline-none focus:border-[#7c3aed]">
-                        <div class="flex gap-1 mb-3" id="estrellas-rating">
-                            <button onclick="setRating(1)" class="star text-gray-300 text-xl"><i class="ph-fill ph-star"></i></button>
-                            <button onclick="setRating(2)" class="star text-gray-300 text-xl"><i class="ph-fill ph-star"></i></button>
-                            <button onclick="setRating(3)" class="star text-gray-300 text-xl"><i class="ph-fill ph-star"></i></button>
-                            <button onclick="setRating(4)" class="star text-gray-300 text-xl"><i class="ph-fill ph-star"></i></button>
-                            <button onclick="setRating(5)" class="star text-gray-300 text-xl"><i class="ph-fill ph-star"></i></button>
+        <main class="container mx-auto px-4 md:px-6 py-8">
+            <div id="contenedor-productos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8"></div>
+        </main>
+
+        <div id="modal-producto" class="fixed inset-0 z-[150] hidden flex items-end md:items-center justify-center p-0 md:p-4">
+            <div id="cerrar-fondo-modal" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+            <div class="relative bg-white w-full max-w-5xl h-[90vh] md:h-auto md:max-h-[90vh] shadow-2xl overflow-hidden flex flex-col md:flex-row reveal rounded-t-3xl md:rounded-none">
+                <button id="btn-cerrar-modal" class="absolute top-6 right-6 text-gray-400 hover:text-[#7c3aed] z-[160] transition-colors bg-white/80 p-2 rounded-full md:bg-transparent md:p-0">
+                    <i class="ph-bold ph-x text-2xl md:text-3xl"></i>
+                </button>
+                <div class="w-full md:w-3/5 bg-gray-50 flex items-center justify-center p-8 md:p-12 h-1/2 md:h-auto">
+                    <img id="img-modal" src="" class="max-w-full max-h-full object-contain drop-shadow-2xl floating">
+                </div>
+                <div class="w-full md:w-2/5 overflow-y-auto custom-scroll p-6 md:p-10 bg-white h-1/2 md:h-auto">
+                    <span class="text-[#7c3aed] text-[9px] font-black uppercase tracking-widest mb-2 block">Serie Élite</span>
+                    <h2 id="titulo-modal" class="font-nike text-2xl md:text-4xl mb-2 text-gray-900 leading-tight"></h2>
+                    <div id="precio-modal" class="text-lg font-medium text-gray-400 mb-6 md:mb-8"></div>
+                    <p id="desc-modal" class="text-gray-600 text-sm leading-relaxed mb-8 md:mb-10"></p>
+                    <div class="mb-8 md:mb-10">
+                        <p class="text-[9px] font-bold uppercase mb-4 text-gray-400">Talla (MX)</p>
+                        <div id="tallas-modal" class="grid grid-cols-4 gap-2"></div>
+                    </div>
+                    <button id="btn-agregar-carrito" class="w-full bg-[#111827] text-white py-5 md:py-6 font-bold uppercase tracking-widest text-[10px] md:text-[11px] hover:bg-[#7c3aed] transition-all mb-8 md:mb-12">
+                        Añadir a la bolsa
+                    </button>
+                    <div class="border-t border-gray-100 pt-8">
+                        <h4 class="font-nike text-sm mb-6 uppercase tracking-widest">Opiniones</h4>
+                        <div id="lista-reseñas" class="space-y-6 mb-8"></div>
+                        <div class="bg-gray-50 p-4 md:p-6 border border-gray-200 rounded-xl">
+                            <input type="text" id="nombre-usuario" placeholder="Nombre" class="w-full bg-white border border-gray-200 p-3 text-xs mb-3 outline-none focus:border-[#7c3aed]">
+                            <div class="flex gap-1 mb-3" id="estrellas-rating">
+                                <button onclick="setRating(1)" class="star text-gray-300 text-xl"><i class="ph-fill ph-star"></i></button>
+                                <button onclick="setRating(2)" class="star text-gray-300 text-xl"><i class="ph-fill ph-star"></i></button>
+                                <button onclick="setRating(3)" class="star text-gray-300 text-xl"><i class="ph-fill ph-star"></i></button>
+                                <button onclick="setRating(4)" class="star text-gray-300 text-xl"><i class="ph-fill ph-star"></i></button>
+                                <button onclick="setRating(5)" class="star text-gray-300 text-xl"><i class="ph-fill ph-star"></i></button>
+                            </div>
+                            <textarea id="texto-reseña" class="w-full bg-white border border-gray-200 p-3 text-xs mb-3 outline-none focus:border-[#7c3aed] resize-none" rows="2" placeholder="Tu reseña..."></textarea>
+                            <button id="btn-publicar-reseña" class="w-full py-3 bg-[#111827] text-white text-[9px] font-black uppercase tracking-widest hover:bg-[#7c3aed]">Enviar</button>
                         </div>
-                        <textarea id="texto-reseña" class="w-full bg-white border border-gray-200 p-3 text-xs mb-3 outline-none focus:border-[#7c3aed] resize-none" rows="2" placeholder="Tu reseña..."></textarea>
-                        <button id="btn-publicar-reseña" class="w-full py-3 bg-[#111827] text-white text-[9px] font-black uppercase tracking-widest hover:bg-[#7c3aed]">Enviar</button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div id="carrito-sidebar" class="fixed inset-0 z-[200] hidden">
-        <div id="cerrar-fondo-carrito" class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
-        <div class="absolute right-0 top-0 h-full w-full sm:max-w-md bg-white p-6 md:p-10 flex flex-col shadow-2xl">
-            <div class="flex justify-between items-center mb-8">
-                <h3 class="font-nike text-2xl md:text-3xl">MI EQUIPO</h3>
-                <button id="btn-cerrar-carrito" class="p-2">
-                    <i class="ph-bold ph-x text-2xl"></i>
-                </button>
-            </div>
-            <div id="items-carrito" class="flex-1 overflow-y-auto space-y-4 custom-scroll"></div>
-            <div class="pt-6 border-t border-gray-100 mt-6">
-                <div class="flex justify-between items-baseline mb-6">
-                    <span class="text-gray-400 text-[10px] font-black uppercase">Total</span>
-                    <span id="total-carrito" class="text-2xl md:text-3xl font-nike">$0.00</span>
+        <div id="carrito-sidebar" class="fixed inset-0 z-[200] hidden">
+            <div id="cerrar-fondo-carrito" class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+            <div class="absolute right-0 top-0 h-full w-full sm:max-w-md bg-white p-6 md:p-10 flex flex-col shadow-2xl">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="font-nike text-2xl md:text-3xl">MI EQUIPO</h3>
+                    <button id="btn-cerrar-carrito" class="p-2">
+                        <i class="ph-bold ph-x text-2xl"></i>
+                    </button>
                 </div>
-                <button class="w-full bg-[#7c3aed] text-white py-5 font-black uppercase tracking-widest text-[10px]">Finalizar Pago</button>
+                <div id="items-carrito" class="flex-1 overflow-y-auto space-y-4 custom-scroll"></div>
+                <div class="pt-6 border-t border-gray-100 mt-6">
+                    <div class="flex justify-between items-baseline mb-6">
+                        <span class="text-gray-400 text-[10px] font-black uppercase">Total</span>
+                        <span id="total-carrito" class="text-2xl md:text-3xl font-nike">$0.00</span>
+                    </div>
+                    <button class="w-full bg-[#7c3aed] text-white py-5 font-black uppercase tracking-widest text-[10px]">Finalizar Pago</button>
+                </div>
             </div>
         </div>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const splash = document.getElementById('splash-screen');
+            const main = document.getElementById('main-content');
+            setTimeout(() => {
+                splash.style.opacity = '0';
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                    main.classList.remove('hidden-content');
+                }, 800);
+            }, 5000); // 5 segundos de carga
+        });
+    </script>
     <script src="script.js"></script>
 </body>
-
 </html>
