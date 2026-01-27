@@ -5,7 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: "p3", nombre: "Nike Phantom GX 2 Academy", precio: 2099, desc: "Toque quirúrgico con NikeSkin y tracción Cyclone 360 para agilidad total.", img: "https://soccerpost.com/cdn/shop/files/AURORA_FJ2577-400_PHSRH000-2000_clipped_rev_1.png?v=1721659274&width=1200", tallas: [26, 27, 28, 29] },
         { id: "p4", nombre: "Puma Future Ultimate", precio: 4199, desc: "Ajuste adaptativo FUZIONFIT360. Diseñado para los creadores de juego.", img: "https://placehold.co/600x600/ffffff/7c3aed?text=Puma+Future", tallas: [27, 28, 29] },
         { id: "p5", nombre: "Mizuno Morelia Neo IV", precio: 5600, desc: "K-Leather de élite. El estándar de oro de la artesanía japonesa.", img: "https://placehold.co/600x600/ffffff/7c3aed?text=Mizuno+Neo", tallas: [26, 27, 28] },
-        { id: "p6", nombre: "Nike Tiempo Legend 10", precio: 3499, desc: "Piel sintética avanzada FlyTouch Lite para un control de balón superior.", img: "https://placehold.co/600x600/ffffff/7c3aed?text=Nike+Tiempo", tallas: [25, 26, 27] }
+        { id: "p6", nombre: "Nike Tiempo Legend 10", precio: 3499, desc: "Piel sintética avanzada FlyTouch Lite para un control de balón superior.", img: "https://placehold.co/600x600/ffffff/7c3aed?text=Nike+Tiempo", tallas: [25, 26, 27] },
+        { id: "p7", nombre: "Chamarra Deportiva Selección Nacional de México 1986", precio: 3999, desc: "Rinde homenaje a la emocionante cultura del fútbol con la Chamarra Deportiva Selección Nacional de México 1986. Esta chamarra deportiva es un homenaje al rico legado de la Copa Mundial™ de México de 1986, donde se combinan elementos de diseño icónicos con un toque moderno.", img: "https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/6c0fc5b7978c4f359be39a3354ee8a53_9366/Chamarra_Deportiva_Seleccion_Nacional_de_Mexico_1986_Verde_JM1092_HM5.jpg", tallas: ["XS", "S", "M", "L", "XL", "2X"] },
+        { id: "p8", nombre: "Nike Academy Team", precio: 799, desc: "La maleta de entrenamiento Nike Academy Team ofrece un diseño duradero para organizar tus cosas. Su compartimento principal se abre para revelar un almacenamiento espacioso, al tiempo que las múltiples correas te permiten transportar cómodamente tu equipo cuando vas de un lugar al otro.", img: "https://static.nike.com/a/images/t_web_pdp_535_v2/f_auto,u_9ddf04c7-2a9a-4d76-add1-d15af8f0263d,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/716ff619-b89f-4b72-9209-dc7a970ff05f/NK+ACDMY+TEAM+S+DUFF.png" },
+        { id: "p9", nombre: "Nike Match Jr.", precio: 599, desc: "Haz cada parada sin miedo gracias a las palmas acolchadas de espuma, las cuales absorben el impacto de los tiros más potentes.", img: "https://static.nike.com/a/images/t_web_pdp_535_v2/f_auto,u_9ddf04c7-2a9a-4d76-add1-d15af8f0263d,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/bf49f0e0-2ce2-4484-a7fb-bc190de3fbaa/NK+GK+MATCH+JR+-+HO24.png", tallas: [4,5,6,7,8] }
     ];
 
     let carrito = [], seleccionado = null, tallaActiva = null, rating = 0;
@@ -102,4 +105,5 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-cerrar-carrito').onclick = () => sidebar.classList.add('hidden');
     document.getElementById('btn-cerrar-modal').onclick = () => modal.classList.add('hidden');
     document.getElementById('cerrar-fondo-modal').onclick = () => modal.classList.add('hidden');
+
 });
