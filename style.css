@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;700;900&display=swap');
+
+body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+.font-nike { font-family: 'Archivo Black', sans-serif; text-transform: uppercase; letter-spacing: -0.05em; }
+
+/* Contenedor de imagen FIJO para que todos los tenis midan lo mismo */
+.img-container-fix {
+    aspect-ratio: 1/1; /* Cuadrado perfecto */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9fafb;
+    padding: 1rem;
+    overflow: hidden;
+}
+
+.img-container-fix img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Ajusta la imagen sin deformarla */
+}
+
+/* Animaciones */
+.reveal {
+    animation: revealIn 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+    opacity: 0;
+}
+
+@keyframes revealIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.floating { animation: float 6s ease-in-out infinite; }
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Scroll minimal */
+.custom-scroll::-webkit-scrollbar { width: 3px; }
+.custom-scroll::-webkit-scrollbar-thumb { background: #7c3aed; }
+
+/* Estilo de Tarjetas */
+.card-vantage {
+    background: white;
+    transition: all 0.4s ease;
+    border: 1px solid #eee;
+}
+
+@media (min-width: 768px) {
+    .card-vantage:hover {
+        transform: translateY(-5px);
+        border-color: #7c3aed;
+        box-shadow: 0 15px 30px rgba(124, 58, 237, 0.05);
+    }
+}
+
+.talla-active {
+    background: #7c3aed !important;
+    color: white !important;
+    border-color: #7c3aed !important;
+}
+
+.star-active { color: #7c3aed !important; }
