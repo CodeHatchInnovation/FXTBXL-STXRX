@@ -1,6 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
     const productos = [
-        { id: "p1", nombre: "Nike Phantom 6 Mamba", precio: 5299, desc: "Precisión implacable. Edición especial inspirada en el instinto de la Black Mamba.", img: "https://static.nike.com/a/images/w_1280,q_auto,f_auto/3299838b-a929-40bc-bc0d-f97008d6bd6f/phantom-6-high-black-mamba-if4394-001-release-date.jpg", tallas: [26, 27, 28, 29] },
+        {
+ id: "p1",
+ nombre: "Nike Phantom 6 Mamba",
+ precio: 5299,
+ desc: "Precisión implacable. Edición especial inspirada en el instinto de la Black Mamba.",
+ img: "https://static.nike.com/a/images/w_1280,q_auto,f_auto/a4295dc9-cdac-4171-aa07-23ee1e23554d/phantom-6-low-black-mamba-if4392-001-release-date.jpg",
+
+ img360: [
+ "https://static.nike.com/a/images/w_1280,q_auto,f_auto/a4295dc9-cdac-4171-aa07-23ee1e23554d/phantom-6-low-black-mamba-if4392-001-release-date.jpg",
+ "https://static.nike.com/a/images/w_1280,q_auto,f_auto/21a86049-6714-4400-a5df-a35e46260d69/phantom-6-low-black-mamba-if4392-001-release-date.jpg",
+ "https://static.nike.com/a/images/w_1280,q_auto,f_auto/26fb1bc8-633e-4aa1-bb4d-23b0e556ec58/phantom-6-low-black-mamba-if4392-001-release-date.jpg",
+ "https://static.nike.com/a/images/w_1280,q_auto,f_auto/31c8f78f-17db-484a-bcc2-23ba96c57d1f/phantom-6-low-black-mamba-if4392-001-release-date.jpg",
+ "https://static.nike.com/a/images/w_1280,q_auto,f_auto/c6c79e11-a50b-4447-a2e8-c1808c557805/phantom-6-low-black-mamba-if4392-001-release-date.jpg"
+ ],
+
+ tallas: [26,27,28,29]
+},
         { id: "p2", nombre: "Adidas X Crazyfast Messi", precio: 1499, desc: "Velocidad pura. El calzado oficial del Rey para cambios de dirección explosivos.", img: "adidas messi.png", tallas: [25, 26, 27, 28] },
         { id: "p3", nombre: "Nike Phantom GX 2 Academy", precio: 2099, desc: "Toque quirúrgico con NikeSkin y tracción Cyclone 360 para agilidad total.", img: "https://soccerpost.com/cdn/shop/files/AURORA_FJ2577-400_PHSRH000-2000_clipped_rev_1.png?v=1721659274&width=1200", tallas: [26, 27, 28, 29] },
         { id: "p4", nombre: "Chamarra Deportiva Selección Nacional de México 1986", precio: 3999, desc: "Rinde homenaje a la emocionante cultura del fútbol con la Chamarra Deportiva Selección Nacional de México 1986. Esta chamarra deportiva es un homenaje al rico legado de la Copa Mundial™ de México de 1986, donde se combinan elementos de diseño icónicos con un toque moderno.", img: "https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/6c0fc5b7978c4f359be39a3354ee8a53_9366/Chamarra_Deportiva_Seleccion_Nacional_de_Mexico_1986_Verde_JM1092_HM5.jpg", tallas: ["XS", "S", "M", "L", "XL", "2X"] },
@@ -38,6 +54,26 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('precio-modal').innerText = `$${p.precio.toLocaleString()} MXN`;
         document.getElementById('desc-modal').innerText = p.desc;
         document.getElementById('img-modal').src = p.img;
+        // activar rotación 360 si el producto tiene imágenes 360
+        if(p.img360){
+            let index = 0;
+            const img = document.getElementById('img-modal');
+        
+            img.onwheel = (e)=>{
+                e.preventDefault();
+        
+                if(e.deltaY > 0){
+                    index++;
+                }else{
+                    index--;
+                }
+        
+                if(index >= p.img360.length) index = 0;
+                if(index < 0) index = p.img360.length-1;
+        
+                img.src = p.img360[index];
+            };
+        }
         document.getElementById('tallas-modal').innerHTML = p.tallas.map(t => 
             `<button onclick="marcarTalla(${t}, this)" class="py-4 border border-gray-100 text-xs font-bold hover:border-[#7c3aed] transition-all">${t}</button>`).join('');
         
@@ -107,6 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('cerrar-fondo-modal').onclick = () => modal.classList.add('hidden');
 
 });
+
 
 
 
