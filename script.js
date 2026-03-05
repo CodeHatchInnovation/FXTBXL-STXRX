@@ -6,15 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
  precio: 5299,
  desc: "Precisión implacable. Edición especial inspirada en el instinto de la Black Mamba.",
  img: "https://static.nike.com/a/images/w_1280,q_auto,f_auto/a4295dc9-cdac-4171-aa07-23ee1e23554d/phantom-6-low-black-mamba-if4392-001-release-date.jpg",
-
- img360: [
- "https://static.nike.com/a/images/w_1280,q_auto,f_auto/a4295dc9-cdac-4171-aa07-23ee1e23554d/phantom-6-low-black-mamba-if4392-001-release-date.jpg",
- "https://static.nike.com/a/images/w_1280,q_auto,f_auto/21a86049-6714-4400-a5df-a35e46260d69/phantom-6-low-black-mamba-if4392-001-release-date.jpg",
- "https://static.nike.com/a/images/w_1280,q_auto,f_auto/26fb1bc8-633e-4aa1-bb4d-23b0e556ec58/phantom-6-low-black-mamba-if4392-001-release-date.jpg",
- "https://static.nike.com/a/images/w_1280,q_auto,f_auto/31c8f78f-17db-484a-bcc2-23ba96c57d1f/phantom-6-low-black-mamba-if4392-001-release-date.jpg",
- "https://static.nike.com/a/images/w_1280,q_auto,f_auto/c6c79e11-a50b-4447-a2e8-c1808c557805/phantom-6-low-black-mamba-if4392-001-release-date.jpg"
- ],
-
  tallas: [26,27,28,29]
 },
         { id: "p2", nombre: "Adidas X Crazyfast Messi", precio: 1499, desc: "Velocidad pura. El calzado oficial del Rey para cambios de dirección explosivos.", img: "adidas messi.png", tallas: [25, 26, 27, 28] },
@@ -24,7 +15,27 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: "p6", nombre: "Nike Match Jr.", precio: 599, desc: "Haz cada parada sin miedo gracias a las palmas acolchadas de espuma, las cuales absorben el impacto de los tiros más potentes.", img: "https://static.nike.com/a/images/t_web_pdp_535_v2/f_auto,u_9ddf04c7-2a9a-4d76-add1-d15af8f0263d,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/bf49f0e0-2ce2-4484-a7fb-bc190de3fbaa/NK+GK+MATCH+JR+-+HO24.png", tallas: [4,5,6,7,8] },
         { id: "p7", nombre: "Nike Pitch", precio: 550, desc: "El balón Nike Pitch es perfecto para las sesiones de entrenamiento de principiante y para desarrollar tu juego de pies. Su diseño de 12 paneles y su cubierta duradera mantienen una forma y una durabilidad constantes, entrenamiento tras entrenamiento", img: "https://static.nike.com/a/images/t_web_pdp_535_v2/f_auto,u_9ddf04c7-2a9a-4d76-add1-d15af8f0263d,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/22736655-8676-4459-8271-3eda0d8d2f11/NIKE+PITCH+-+FA25.png", tallas: [3,4,5] },
         { id: "p8", nombre: "Nike Total 90", precio: 2500, desc: "Auténtico estilo de fútbol, ahora para el día a día. Los Total 90 están de regreso ofreciendo el estilo retro de los años 2000 con su parte superior acolchada y agujetas asimétricas originales. Cambiamos la suela con tachones por una suela de goma plana, ideal para la calle y trajimos de vuelta una paleta de colores de herencia para usarlos como quieras.", img: "https://static.nike.com/a/images/t_web_pdp_535_v2/f_auto,u_9ddf04c7-2a9a-4d76-add1-d15af8f0263d,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/100b402b-a93d-43c3-8d25-570fd1ab5a41/WMNS+NIKE+T90.png", tallas: [22,22.5,23,23.5,24,24.5,25,25.5,26] },
-        { id: "p9", nombre: "Jersey Local Italia 26 Versión Jugador", precio: 2299, desc: "Lleva con orgullo tu pasión. Recuerda que al personalizar un artículo.", img: "https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/db5d24aa10144a37b74c3901e80aaa86_9366/Jersey_Local_Italia_26_Version_Jugador_Azul_JL6934_HM5.jpg", tallas: ["XS", "S", "M", "L", "XL", "2X"] }
+        {
+id: "p9",
+nombre: "Tenis 360 Demo",
+precio: 1500,
+desc: "Producto de demostración con vista rotativa 360° para mostrar diferentes ángulos del producto.",
+
+img: "https://raw.githubusercontent.com/sergiovargasdev/360-product-view/main/shoe/1.png",
+
+img360: [
+"https://raw.githubusercontent.com/sergiovargasdev/360-product-view/main/shoe/1.png",
+"https://raw.githubusercontent.com/sergiovargasdev/360-product-view/main/shoe/2.png",
+"https://raw.githubusercontent.com/sergiovargasdev/360-product-view/main/shoe/3.png",
+"https://raw.githubusercontent.com/sergiovargasdev/360-product-view/main/shoe/4.png",
+"https://raw.githubusercontent.com/sergiovargasdev/360-product-view/main/shoe/5.png",
+"https://raw.githubusercontent.com/sergiovargasdev/360-product-view/main/shoe/6.png",
+"https://raw.githubusercontent.com/sergiovargasdev/360-product-view/main/shoe/7.png",
+"https://raw.githubusercontent.com/sergiovargasdev/360-product-view/main/shoe/8.png"
+],
+
+tallas: [26,27,28]
+}
     ];
 
     let carrito = [], seleccionado = null, tallaActiva = null, rating = 0;
@@ -143,6 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('cerrar-fondo-modal').onclick = () => modal.classList.add('hidden');
 
 });
+
 
 
 
