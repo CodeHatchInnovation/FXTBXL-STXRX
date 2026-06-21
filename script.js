@@ -22,20 +22,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('modal-producto');
     const sidebar = document.getElementById('carrito-sidebar');
 
-    // ===============================
-    // CARGAR PRODUCTOS DESDE FIREBASE
-    // ===============================
-    const productosRef = ref(db, "productos");
-    onValue(productosRef, (snapshot) => {
-        productos = [];
-        snapshot.forEach((producto) => {
-            productos.push({
-                id: producto.key,
-                ...producto.val()
+    // ==========================================
+    // CARGAR PRODUCTOS DESDE CLOUD FIRESTORE 👑
+    // ==========================================
+    async function obtenerProductosDeFirestore() {
+        try {
+            const querySnapshot = await getDocs(collection(firestoreDB, "productos"));
+            productos = [];
+            
+            querySnapshot.forEach((doc) => {
+                productos.push({
+                    id: doc.id,
+                    ...doc.data()
+                });
             });
-        });
-        cargarProductos();
-    });
+            
+            // Espera a que termine el Splash Screen (5s + 0.5s margen) antes de renderizar
+            setTimeout(() => {
+                cargarProductos();
+            }, 5500);
+
+        } catch (error) {
+            console.error("Error al traer productos de Firestore:", error);
+        }
+    }
+
+    // Arrancamos la descarga de tenis en segundo plano
+    obtenerProductosDeFirestore();
 
     // ===============================
     // MOSTRAR PRODUCTOS
@@ -80,10 +93,10 @@ document.addEventListener('DOMContentLoaded', () => {
             </button>
         `).join('') : '<p class="text-xs text-gray-400">No hay tallas disponibles</p>';
 
-        // ===============================
-        // CARGAR RESEÑAS DESDE FIREBASE
-        // ===============================
-        const resenasRef = ref(db, `resenas_v4/${p.id}`);
+        // ===========================================
+        // CARGAR RESEÑAS DESDE REALTIME DATABASE 💬
+        // ===========================================
+        const resenasRef = ref(realtimeDB, `resenas_v4/${p.id}`);
         onValue(resenasRef, (snap) => {
             const data = snap.val();
             document.getElementById('lista-reseñas').innerHTML = data ? 
@@ -133,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const c = document.getElementById('texto-reseña').value;
         if (!u || !c || !rating) return alert("Completa los campos de la reseña.");
         
-        const nuevaResenaRef = ref(db, `resenas_v4/${seleccionado.id}`);
+        const nuevaResenaRef = ref(realtimeDB, `resenas_v4/${seleccionado.id}`);
         push(nuevaResenaRef, {
             u,
             c,
