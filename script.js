@@ -220,51 +220,49 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         if (carrito.length === 0) return alert("Tu carrito está vacío.");
         
-        // 1. Ocultamos el carrito
+        // Cierra el carrito
         sidebar.classList.add('hidden'); 
         
-        // 2. Levantamos inmediatamente el modal de envío
+        // Abre el formulario de envío al instante sin trabas
         document.getElementById('modal-envio').classList.remove('hidden');
     };
 
     document.getElementById('cerrar-envio').onclick = () => { document.getElementById('modal-envio').classList.add('hidden'); };
     document.getElementById('cerrar-fondo-envio').onclick = () => { document.getElementById('modal-envio').classList.add('hidden'); };
 
-}); // <-- Aquí se cierra correctamente el DOMContentLoaded
-
-// ===============================
-// BUSCADOR
-// ===============================
-document.getElementById('buscador-productos').addEventListener('input', function() {
-    const texto = this.value.toLowerCase();
-    document.querySelectorAll('#contenedor-productos .card-vantage').forEach(card => {
-        const nombre = card.querySelector('h3').innerText.toLowerCase();
-        card.style.display = nombre.includes(texto) ? 'flex' : 'none';
-    });
-});
-
-// ===============================
-// WHATSAPP PEDIDO
-// ===============================
-document.getElementById('form-envio').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const nombre = document.getElementById('envio-nombre').value;
-    const telefono = document.getElementById('envio-telefono').value;
-    const correo = document.getElementById('envio-correo').value;
-    const estado = document.getElementById('envio-estado').value;
-    const city = document.getElementById('envio-ciudad').value;
-    const colonia = document.getElementById('envio-colonia').value;
-    const cp = document.getElementById('envio-cp').value;
-    const calle = document.getElementById('envio-calle').value;
-    const referencias = document.getElementById('envio-referencias').value;
-    
-    let productosTexto = "";
-    carrito.forEach(item => {
-        productosTexto += `• ${item.nombre}\nTalla: ${item.talla}\nPrecio: $${item.precioVenta}\n\n`;
+    // ===============================
+    // BUSCADOR
+    // ===============================
+    document.getElementById('buscador-productos').addEventListener('input', function() {
+        const texto = this.value.toLowerCase();
+        document.querySelectorAll('#contenedor-productos .card-vantage').forEach(card => {
+            const nombre = card.querySelector('h3').innerText.toLowerCase();
+            card.style.display = nombre.includes(texto) ? 'flex' : 'none';
+        });
     });
 
-    const total = document.getElementById('total-carrito').innerText;
-    const mensaje = `
+    // ===============================
+    // WHATSAPP PEDIDO
+    // ===============================
+    document.getElementById('form-envio').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nombre = document.getElementById('envio-nombre').value;
+        const telefono = document.getElementById('envio-telefono').value;
+        const correo = document.getElementById('envio-correo').value;
+        const estado = document.getElementById('envio-estado').value;
+        const city = document.getElementById('envio-ciudad').value;
+        const colonia = document.getElementById('envio-colonia').value;
+        const cp = document.getElementById('envio-cp').value;
+        const calle = document.getElementById('envio-calle').value;
+        const referencias = document.getElementById('envio-referencias').value;
+        
+        let productosTexto = "";
+        carrito.forEach(item => {
+            productosTexto += `• ${item.nombre}\nTalla: ${item.talla}\nPrecio: $${item.precioVenta}\n\n`;
+        });
+
+        const total = document.getElementById('total-carrito').innerText;
+        const mensaje = `
 🛒 NUEVO PEDIDO SPXRT STXRX
 👤 Cliente:
 ${nombre}
@@ -287,10 +285,12 @@ ${productosTexto}━━━━━━━━━━━━━━
 ${total}
 🚚 Pago contra entrega
 `;
-    const numero = "+525525621721";
-    
-    window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`, '_blank');
-    
-    // Cierra automáticamente el formulario al mandar el mensaje
-    document.getElementById('modal-envio').classList.add('hidden');
-});
+        const numero = "+525525621721";
+        
+        window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`, '_blank');
+        
+        // Cierra automáticamente el formulario al mandar el mensaje
+        document.getElementById('modal-envio').classList.add('hidden');
+    });
+
+}); // <-- Cierre perfecto y absoluto de DOMContentLoaded al final del archivo
