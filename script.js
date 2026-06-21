@@ -8,10 +8,8 @@ import {
     onValue,
     update
 } from "./firebase.js";
-
-// Importamos doc y updateDoc directo de la librería de Firebase para evitar el error de exportación
+// Importamos las herramientas de actualización directamente desde el CDN oficial de Google
 import { doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
 // Variables de estado accesibles en todo el módulo
 let productos = [];
 let carrito = [];
