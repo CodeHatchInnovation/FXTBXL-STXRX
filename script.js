@@ -1,3 +1,4 @@
+import {db,ref,push,onValue,update} from "./firebase.js";
 document.addEventListener('DOMContentLoaded', () => {
 
     let productos = [];
