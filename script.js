@@ -6,7 +6,9 @@ import {
     ref,
     push,
     onValue,
-    update
+    update,
+    doc,         // Para hacer referencia al documento exacto del tenis
+    updateDoc    // Para actualizar el array de tallas en Firestore
 } from "./firebase.js";
 
 // Variables de estado accesibles en todo el módulo
@@ -241,10 +243,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ===============================
-    // WHATSAPP PEDIDO
-    // ===============================
-    document.getElementById('form-envio').addEventListener('submit', (e) => {
+    // ===========================================
+    // WHATSAPP PEDIDO Y DESCUENTO DE INVENTARIO 🚀
+    // ===========================================
+    document.getElementById('form-envio').addEventListener('submit', async (e) => {
         e.preventDefault();
         const nombre = document.getElementById('envio-nombre').value;
         const telefono = document.getElementById('envio-telefono').value;
@@ -257,12 +259,31 @@ document.addEventListener('DOMContentLoaded', () => {
         const referencias = document.getElementById('envio-referencias').value;
         
         let productosTexto = "";
-        carrito.forEach(item => {
-            productosTexto += `• ${item.nombre}\nTalla: ${item.talla}\nPrecio: $${item.precioVenta}\n\n`;
-        });
+        
+        try {
+            // Buscamos y restamos 1 al stock de la talla de cada producto en el carrito
+            for (const item of carrito) {
+                productosTexto += `• ${item.nombre}\nTalla: ${item.talla}\nPrecio: $${item.precioVenta}\n\n`;
 
-        const total = document.getElementById('total-carrito').innerText;
-        const mensaje = `
+                const productoOriginal = productos.find(p => p.id === item.id);
+                if (productoOriginal && productoOriginal.tallas) {
+                    const tallasActualizadas = productoOriginal.tallas.map(t => {
+                        if (t.talla === item.talla) {
+                            return { ...t, stock: Math.max(0, t.stock - 1) }; // Resta 1 unidad y evita números negativos
+                        }
+                        return t;
+                    });
+
+                    // Mandamos la actualización del array completo a Firestore
+                    const productoDocRef = doc(firestoreDB, "productos", item.id);
+                    await updateDoc(productoDocRef, {
+                        tallas: tallasActualizadas
+                    });
+                }
+            }
+
+            const total = document.getElementById('total-carrito').innerText;
+            const mensaje = `
 🛒 NUEVO PEDIDO SPXRT STXRX
 👤 Cliente:
 ${nombre}
@@ -285,12 +306,22 @@ ${productosTexto}━━━━━━━━━━━━━━
 ${total}
 🚚 Pago contra entrega
 `;
-        const numero = "+525525621721";
-        
-        window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`, '_blank');
-        
-        // Cierra automáticamente el formulario al mandar el mensaje
-        document.getElementById('modal-envio').classList.add('hidden');
+            const numero = "+525525621721";
+            
+            // Abre WhatsApp en pestaña nueva
+            window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`, '_blank');
+            
+            // Reseteamos el carrito local para limpiar la interfaz de usuario
+            carrito = [];
+            actualizarCarrito();
+            
+            // Cierra el formulario de envío para que regrese a la vista normal de la tienda
+            document.getElementById('modal-envio').classList.add('hidden');
+
+        } catch (error) {
+            console.error("Error al actualizar el stock en la compra: ", error);
+            alert("Hubo un problema al descontar el inventario. Por favor, inténtalo de nuevo.");
+        }
     });
 
-}); // <-- Cierre perfecto y absoluto de DOMContentLoaded al final del archivo
+});
