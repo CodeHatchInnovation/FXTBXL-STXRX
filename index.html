@@ -58,7 +58,11 @@
             };
 
             const app = initializeApp(firebaseConfig);
-            window.fbDB = getDatabase(app); window.fbRef = ref; window.fbPush = push; window.fbOnValue = onValue;
+            window.fbDB = getDatabase(app);
+            window.fbRef = ref;
+            window.fbPush = push;
+            window.fbOnValue = onValue;
+            window.fbUpdate = update;
         </script>
 
         <nav class="fixed top-0 w-full z-[100] bg-white/90 backdrop-blur-xl border-b border-gray-200">
