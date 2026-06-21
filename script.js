@@ -213,20 +213,19 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-cerrar-modal').onclick = () => { modal.classList.add('hidden'); };
     document.getElementById('cerrar-fondo-modal').onclick = () => { modal.classList.add('hidden'); };
 
-// ===============================
+    // ===============================
     // FORMULARIO DE ENVÍO
     // ===============================
     document.getElementById('btn-continuar-pedido').onclick = (e) => {
-        // Evitamos cualquier comportamiento por defecto o propagación molesta
         e.preventDefault();
-        e.stopPropagation();
         if (carrito.length === 0) return alert("Tu carrito está vacío.");
-        // Cerramos el carrito al instante
+        // 1. Primero cerramos el carrito por completo
         sidebar.classList.add('hidden'); 
-        // Forzamos al navegador a pintar el formulario de envío en el siguiente cuadro de animación
-        requestAnimationFrame(() => {
-            document.getElementById('modal-envio').classList.remove('hidden'); 
-        });
+        // 2. Esperamos un instante a que el navegador procese el cierre 
+        // y abrimos el formulario de inmediato
+        setTimeout(() => {
+            document.getElementById('modal-envio').classList.remove('hidden');
+        }, 50); // 50 milisegundos son imperceptibles pero limpian el flujo del DOM
     };
 
 // ===============================
