@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 direccion: direccionCompleta
             };
 
-            await emailjs.send('service_2rbd0tp', 'template_9wxljc7', templateParams);
+            await emailjs.send('service_jcmou3p', 'template_9wxljc7', templateParams);
             console.log("Correo enviado con éxito.");
             
             // Mensaje de éxito en pantalla
