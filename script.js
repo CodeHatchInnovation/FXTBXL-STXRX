@@ -1,4 +1,13 @@
-import { db, ref, push, onValue, update } from "./firebase.js";
+import { 
+    firestoreDB,
+    realtimeDB,
+    collection,
+    getDocs,
+    ref,
+    push,
+    onValue,
+    update
+} from "./firebase.js";
 
 // Variables de estado accesibles en todo el módulo
 let productos = [];
