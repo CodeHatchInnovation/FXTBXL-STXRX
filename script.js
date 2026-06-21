@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // =========================================================
+   // =========================================================
     // PROCESAR COMPRA: GUARDAR EN BD Y NOTIFICACIÓN POR CORREO 🚀
     // =========================================================
     document.getElementById('form-envio').addEventListener('submit', async (e) => {
@@ -254,11 +254,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const referencias = document.getElementById('envio-referencias').value;
         
         try {
-            // Importamos los métodos oficiales asíncronos directamente del SDK unificado de Firebase
+            // Importamos solo lo necesario desde el CDN, evitando chocar con 'collection'
             const firebaseFirestore = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js");
             const docRef = firebaseFirestore.doc;
             const updateDocRef = firebaseFirestore.updateDoc;
-            const collectionRef = firebaseFirestore.collection;
             const addDocRef = firebaseFirestore.addDoc;
 
             // 1. Descontar del inventario de productos en Firestore
@@ -304,8 +303,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 fecha: new Date().toISOString()
             };
 
-            // Usamos la referencia de colección limpia para guardar el respaldo
-            await addDocRef(collectionRef(firestoreDB, "pedidos"), nuevoPedido);
+            // USA LA FUNCIÓN 'collection' QUE VIENE DESDE TU ARCHIVO LOCAL (Arriba en tus imports)
+            const origenColeccionPedidos = collection(firestoreDB, "pedidos");
+            await addDocRef(origenColeccionPedidos, nuevoPedido);
 
             // 3. Enviar Correo de Confirmación mediante EmailJS ✉️
             const templateParams = {
@@ -336,5 +336,3 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Hubo un problema al procesar tu compra. Por favor, inténtalo de nuevo.");
         }
     });
-
-});
