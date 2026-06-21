@@ -260,20 +260,22 @@ document.addEventListener('DOMContentLoaded', () => {
         let productosTexto = "";
         
         try {
-            // Buscamos y restamos 1 al stock de la talla de cada producto en el carrito
+            // Importamos dinámicamente las herramientas desde el mismo origen para evitar conflictos de instancias
+            const { doc, updateDoc } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js");
+
             for (const item of carrito) {
                 productosTexto += `• ${item.nombre}\nTalla: ${item.talla}\nPrecio: $${item.precioVenta}\n\n`;
 
                 const productoOriginal = productos.find(p => p.id === item.id);
                 if (productoOriginal && productoOriginal.tallas) {
                     const tallasActualizadas = productoOriginal.tallas.map(t => {
-                        if (t.talla === item.talla) {
-                            return { ...t, stock: Math.max(0, t.stock - 1) }; // Resta 1 unidad y evita números negativos
+                        if (t.talla == item.talla) { // Usamos == por si las tallas vienen como string o número
+                            return { ...t, stock: Math.max(0, Number(t.stock) - 1) };
                         }
                         return t;
                     });
 
-                    // Mandamos la actualización del array completo a Firestore
+                    // Modificación directa y segura usando la instancia unificada
                     const productoDocRef = doc(firestoreDB, "productos", item.id);
                     await updateDoc(productoDocRef, {
                         tallas: tallasActualizadas
@@ -307,20 +309,14 @@ ${total}
 `;
             const numero = "+525525621721";
             
-            // Abre WhatsApp en pestaña nueva
             window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`, '_blank');
             
-            // Reseteamos el carrito local para limpiar la interfaz de usuario
             carrito = [];
             actualizarCarrito();
-            
-            // Cierra el formulario de envío para que regrese a la vista normal de la tienda
             document.getElementById('modal-envio').classList.add('hidden');
 
         } catch (error) {
-            console.error("Error al actualizar el stock en la compra: ", error);
+            console.error("Error exacto en la consola:", error);
             alert("Hubo un problema al descontar el inventario. Por favor, inténtalo de nuevo.");
         }
     });
-
-});
