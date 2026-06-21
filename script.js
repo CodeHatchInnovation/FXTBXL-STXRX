@@ -33,10 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const querySnapshot = await getDocs(collection(firestoreDB, "productos"));
             productos = [];
             
-            querySnapshot.forEach((doc) => {
+            querySnapshot.forEach((docSnap) => {
+                // Primero extraemos los datos del producto
+                const datosProducto = docSnap.data();
+                
                 productos.push({
-                    id: doc.id,
-                    ...doc.data()
+                    ...datosProducto,
+                    // Forzamos que el 'id' del objeto sea SIEMPRE el ID del documento (el código raro de la columna del medio)
+                    id: docSnap.id 
                 });
             });
             
@@ -49,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error("Error al traer productos de Firestore:", error);
         }
     }
-
     // Arrancamos la descarga de tenis en segundo plano
     obtenerProductosDeFirestore();
 
