@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebar = document.getElementById('carrito-sidebar');
 
     // ==========================================
-    // CARGAR PRODUCTOS DESDE CLOUD FIRESTORE 👑
+    // CARGAR PRODUCTOS DESDE CLOUD FIRESTORE
     // ==========================================
     async function obtenerProductosDeFirestore() {
         try {
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('') : '<p class="text-xs text-gray-400">No hay tallas disponibles</p>';
 
         // ===========================================
-        // CARGAR RESEÑAS DESDE REALTIME DATABASE 💬
+        // CARGAR RESEÑAS DESDE REALTIME DATABASE
         // ===========================================
         const resenasRef = ref(realtimeDB, `resenas_v4/${p.id}`);
         onValue(resenasRef, (snap) => {
@@ -281,5 +281,9 @@ ${total}
 🚚 Pago contra entrega
 `;
     const numero = "+525525621721";
+    
     window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`, '_blank');
+    
+    // Cierra automáticamente el formulario al mandar el mensaje
+    document.getElementById('modal-envio').classList.add('hidden');
 });
