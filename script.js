@@ -1,15 +1,14 @@
 import { 
     firestoreDB,
     realtimeDB,
-    collection,
+    collection, // Mantenemos la importación nativa que ya usa tu visualizador de productos
     getDocs,
     ref,
     push,
     onValue,
     update
 } from "./firebase.js";
-// Importamos las herramientas de actualización directamente desde el CDN oficial de Google
-import { doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
 // Variables de estado accesibles en todo el módulo
 let productos = [];
 let carrito = [];
@@ -221,10 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         if (carrito.length === 0) return alert("Tu carrito está vacío.");
         
-        // Cierra el carrito
         sidebar.classList.add('hidden'); 
-        
-        // Abre el formulario de envío al instante sin trabas
         document.getElementById('modal-envio').classList.remove('hidden');
     };
 
@@ -258,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const referencias = document.getElementById('envio-referencias').value;
         
         try {
-            // Importamos las herramientas oficiales necesarias en caliente
+            // Importamos los métodos oficiales asíncronos directamente del SDK unificado de Firebase
             const firebaseFirestore = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js");
             const docRef = firebaseFirestore.doc;
             const updateDocRef = firebaseFirestore.updateDoc;
@@ -266,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const addDocRef = firebaseFirestore.addDoc;
 
             // 1. Descontar del inventario de productos en Firestore
-            let productosTextoEmail = ""; // Construirá el texto formateado para el correo
+            let productosTextoEmail = ""; 
             
             for (const item of carrito) {
                 productosTextoEmail += `• ${item.nombre} - Talla: ${item.talla} - Precio: $${item.precioVenta.toLocaleString()} MXN\n`;
@@ -308,6 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 fecha: new Date().toISOString()
             };
 
+            // Usamos la referencia de colección limpia para guardar el respaldo
             await addDocRef(collectionRef(firestoreDB, "pedidos"), nuevoPedido);
 
             // 3. Enviar Correo de Confirmación mediante EmailJS ✉️
@@ -320,7 +317,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 direccion: direccionCompleta
             };
 
-            // Reemplaza con tus IDs reales de la dashboard de EmailJS
             await emailjs.send('service_2rbd0tp', 'template_9wxljc7', templateParams);
             console.log("Correo enviado con éxito.");
             
@@ -340,4 +336,5 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Hubo un problema al procesar tu compra. Por favor, inténtalo de nuevo.");
         }
     });
+
 });
