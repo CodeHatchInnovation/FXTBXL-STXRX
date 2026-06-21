@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 // Asegúrate de importar getDatabase para la Realtime Database
-import { getDatabase } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"; 
+import { getDatabase } from "https://e-commerce-2ff74-default-rtdb.firebaseio.com/"; 
 
 const firebaseConfig = {
     apiKey: "AIzaSyBgoDcmxdIYRqo5gup302xLWaKO3AHsC5Y",
