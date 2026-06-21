@@ -3,7 +3,10 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { 
     getFirestore,
     collection,
-    getDocs
+    getDocs,
+    addDoc,     // 👈 Agregado para crear pedidos
+    updateDoc,  // 👈 Agregado para actualizar stock
+    doc         // 👈 Agregado para apuntar a un producto específico
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 // REALTIME DATABASE
 import { 
@@ -26,11 +29,13 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-// Firestore (productos)
+
+// Instancias
 export const firestoreDB = getFirestore(app);
-// Realtime Database (reseñas)
 export const realtimeDB = getDatabase(app);
-// Firestore
-export { collection, getDocs };
-// Realtime Database
+
+// Exportaciones de Firestore (Organizadas)
+export { collection, getDocs, addDoc, updateDoc, doc };
+
+// Exportaciones de Realtime Database
 export { ref, push, onValue, update };
