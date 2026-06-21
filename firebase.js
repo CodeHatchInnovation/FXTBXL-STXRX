@@ -1,6 +1,18 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-// CORREGIDO: Ahora importa desde el CDN oficial de la base de datos de Firebase
-import { getDatabase } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"; 
+// FIRESTORE
+import { 
+    getFirestore,
+    collection,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+// REALTIME DATABASE
+import { 
+    getDatabase,
+    ref,
+    push,
+    onValue,
+    update
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBgoDcmxdIYRqo5gup302xLWaKO3AHsC5Y",
@@ -13,11 +25,12 @@ const firebaseConfig = {
     measurementId: "G-0BLDR9NWTK"
 };
 
-// 1. Inicializas la App
 const app = initializeApp(firebaseConfig);
-
-// 2. Inicializas la base de datos y LA EXPORTAS como 'db'
-export const db = getDatabase(app); 
-
-// 3. CORREGIDO: Exporta las funciones correctas desde el CDN de la base de datos
-export { ref, push, onValue, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+// Firestore (productos)
+export const firestoreDB = getFirestore(app);
+// Realtime Database (reseñas)
+export const realtimeDB = getDatabase(app);
+// Firestore
+export { collection, getDocs };
+// Realtime Database
+export { ref, push, onValue, update };
