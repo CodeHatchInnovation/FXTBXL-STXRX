@@ -6,7 +6,8 @@ import {
     getDocs,
     addDoc,     // 👈 Agregado para crear pedidos
     updateDoc,  // 👈 Agregado para actualizar stock
-    doc         // 👈 Agregado para apuntar a un producto específico
+    doc,        // 👈 Agregado para apuntar a un producto específico
+    runTransaction
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 // REALTIME DATABASE
 import { 
@@ -35,7 +36,7 @@ export const firestoreDB = getFirestore(app);
 export const realtimeDB = getDatabase(app);
 
 // Exportaciones de Firestore (Organizadas)
-export { collection, getDocs, addDoc, updateDoc, doc };
+export { collection, getDocs, addDoc, updateDoc, doc, runTransaction };
 
 // Exportaciones de Realtime Database
 export { ref, push, onValue, update };
