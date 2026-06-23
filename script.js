@@ -3,13 +3,14 @@ import {
     realtimeDB,
     collection,
     getDocs,
-    addDoc,     // Traído desde tu firebase.js
-    updateDoc,  // Traído desde tu firebase.js
-    doc,        // Traído desde tu firebase.js
+    addDoc,     
+    updateDoc,  
+    doc,        
     ref,
     push,
     onValue,
-    update      // Este se queda para tus reseñas de Realtime
+    update,
+    runTransaction
 } from "./firebase.js";
 
 // Variables de estado accesibles en todo el módulo
