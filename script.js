@@ -86,17 +86,24 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('desc-modal').innerText = p.desc;
         document.getElementById('img-modal').src = p.img;
         
-        document.getElementById('tallas-modal').innerHTML = p.tallas ? p.tallas.map(t => `
-            <button
-                onclick="marcarTalla('${t.talla}', this)"
-                class="py-4 border border-gray-100 text-xs font-bold hover:border-[#7c3aed] transition-all"
-                ${t.stock <= 0 ? 'disabled' : ''}
-            >
-                ${t.talla}
-                <br>
-                <span class="text-[9px] text-gray-400">${t.stock} disponibles</span>
-            </button>
-        `).join('') : '<p class="text-xs text-gray-400">No hay tallas disponibles</p>';
+        // Verificamos si tiene tallas y filtramos solo las que tienen stock > 0
+        const tallasDisponibles = p.tallas ? p.tallas.filter(t => Number(t.stock) > 0) : [];
+
+        if (tallasDisponibles.length > 0) {
+            document.getElementById('tallas-modal').innerHTML = tallasDisponibles.map(t => `
+                <button
+                    onclick="marcarTalla('${t.talla}', this)"
+                    class="py-4 border border-gray-100 text-xs font-bold hover:border-[#7c3aed] transition-all"
+                >
+                    ${t.talla}
+                    <br>
+                    <span class="text-[9px] text-gray-400">${t.stock} disponibles</span>
+                </button>
+            `).join('');
+        } else {
+            // Si el producto no tiene tallas con stock, mostramos un mensaje limpio
+            document.getElementById('tallas-modal').innerHTML = '<p class="text-xs text-gray-400 uppercase tracking-widest">No hay stock disponible actualmente.</p>';
+        }
 
         // ===========================================
         // CARGAR RESEÑAS DESDE REALTIME DATABASE
